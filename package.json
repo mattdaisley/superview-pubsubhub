@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.122.0",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "googleapis": "^21.3.0",
+    "jasmine-node": "^1.14.5",
+    "jsonwebtoken": "^7.0.1",
+    "knex": "^0.11.7",
+    "lodash": "^4.13.1",
+    "merge": "^1.2.0",
+    "mysql": "^2.10.2",
+    "request": "^2.73.0",
+    "sqs-consumer": "^3.7.0",
+    "twitch-api-v5": "^2.0.2"
+  },
+  "name": "superview-auth",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/mattdaisley/superview-pubsubhub.git",
+  "author": "Matt Daisley <mattdaisley@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "pretest": "npm run stop",
+    "docker-build": "docker build -t superview-pubsubhub .",
+    "docker-ecr-login": "$(aws ecr get-login --no-include-email --region us-east-1)",
+    "docker-tag": "docker tag superview-pubsubhub:latest 970556883193.dkr.ecr.us-east-1.amazonaws.com/superview-pubsubhub:latest",
+    "docker-push": "docker push 970556883193.dkr.ecr.us-east-1.amazonaws.com/superview-pubsubhub:latest",
+    "docker-run": "docker run -d superview-pubsubhub",
+    "docker-complete": "npm run docker-build && npm run docker-ecr-login && npm run docker-tag && npm run docker-push"
+  }
+}
