@@ -61,17 +61,19 @@ submitFeedEvent = ( feedData ) => {
   parseString(feedData, function (err, result) {
     if ( !err ) {
       console.log(result);
-      result.feed.entry.map( entry => {
-        producer.send({
-          id: entry['yt:videoId'][0],
-          body: JSON.stringify(entry),
-          messageAttributes: {
-              type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_PUBSUB' },
-          }
-        }, function(err) {
-          if (err) console.log(err);
-        });
-      })
+      if ( result.feed && reulst.feed.entry ) {
+        result.feed.entry.map( entry => {
+          producer.send({
+            id: entry['yt:videoId'][0],
+            body: JSON.stringify(entry),
+            messageAttributes: {
+                type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_PUBSUB' },
+            }
+          }, function(err) {
+            if (err) console.log(err);
+          });
+        })
+      }
     } else {
       console.log(err);
     }
