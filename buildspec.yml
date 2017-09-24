@@ -9,7 +9,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...  
-      - docker build -t superview-auth .
+      - docker build -t superview-pubsubhub .
       - docker tag superview-pubsubhub:latest 970556883193.dkr.ecr.us-east-1.amazonaws.com/superview-pubsubhub:latest      
   post_build:
     commands:
