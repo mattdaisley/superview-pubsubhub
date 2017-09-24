@@ -1,5 +1,5 @@
-var pubSubHubbub = require("../index"),
-crypto = require("crypto"),
+var pubSubHubbub = require("pubsubhubbub"),
+    crypto       = require("crypto"),
 
 pubsub = pubSubHubbub.createServer({
     callbackUrl: "https://pubsubhub.superview.tv",
