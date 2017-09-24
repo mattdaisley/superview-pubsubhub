@@ -61,7 +61,7 @@ submitFeedEvent = ( feedData ) => {
   parseString(feedData, function (err, result) {
     if ( !err ) {
       console.log(result);
-      if ( result.feed && reulst.feed.entry ) {
+      if ( result.feed && result.feed.entry ) {
         result.feed.entry.map( entry => {
           producer.send({
             id: entry['yt:videoId'][0],
