@@ -1,5 +1,17 @@
-var pubSubHubbub = require("pubsubhubbub"),
-    crypto       = require("crypto"),
+var pubSubHubbub    = require("pubsubhubbub"),
+    crypto          = require("crypto"),
+    AWS             = require('aws-sdk'),
+    Producer        = require('sqs-producer'),
+    path            = require('path'),
+    parseString     = require('xml2js').parseString;
+
+AWS.config.loadFromPath( path.join(__dirname, './config', 'aws.json') );
+
+const producer = Producer.create({
+    queueUrl: 'https://sqs.us-east-1.amazonaws.com/970556883193/SuperViewQueue',
+    sqs: new AWS.SQS()
+});
+
 
 pubsub = pubSubHubbub.createServer({
     callbackUrl: "https://pubsubhub.superview.tv",
@@ -36,11 +48,32 @@ pubsub.on("error", function(error){
 });
 
 pubsub.on("feed", function(data){
-  console.log(data)
-  console.log(data.feed.toString());
+  submitFeedEvent(data.feed.toString());
 });
 
 pubsub.on("listen", function(){
   console.log("Server listening on port %s", pubsub.port);
-  pubsub.subscribe(topic, hub);
 });
+
+
+submitFeedEvent = ( feedData ) => {
+
+  parseString(feedData, function (err, result) {
+    if ( !err ) {
+      console.log(result);
+      result.feed.entry.map( entry => {
+        producer.send({
+          id: entry['yt:videoId'][0],
+          body: JSON.stringify(entry),
+          messageAttributes: {
+              type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_PUBSUB' },
+          }
+        }, function(err) {
+          if (err) console.log(err);
+        });
+      })
+    } else {
+      console.log(err);
+    }
+  });
+}

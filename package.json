@@ -15,7 +15,9 @@
     "pubsubhubbub": "^0.4.1",
     "request": "^2.73.0",
     "sqs-consumer": "^3.7.0",
-    "twitch-api-v5": "^2.0.2"
+    "sqs-producer": "^1.5.0",
+    "twitch-api-v5": "^2.0.2",
+    "xml2js": "^0.4.19"
   },
   "name": "superview-auth",
   "version": "0.0.1",
