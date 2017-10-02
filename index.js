@@ -61,6 +61,7 @@ pubsub.on("listen", function(){
 
 submitSubscribeEvent = ( subscribeData ) => {
   producer.send({
+    id: new Date().getTime(),
     body: JSON.stringify(subscribeData),
     messageAttributes: {
         type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_SUBSCRIBE' },
