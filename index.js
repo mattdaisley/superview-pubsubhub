@@ -31,6 +31,7 @@ pubsub.on("denied", function(data){
 pubsub.on("subscribe", function(data){
   console.log("Subscribe");
   console.log(data);
+  submitSubscribeEvent(data);
 
   console.log("Subscribed "+topic+" to "+hub);
 });
