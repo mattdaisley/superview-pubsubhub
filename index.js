@@ -55,6 +55,18 @@ pubsub.on("listen", function(){
   console.log("Server listening on port %s", pubsub.port);
 });
 
+submitSubscribeEvent = ( subscribeData ) => {
+  producer.send({
+    id: subscribeData.topic,
+    body: JSON.stringify(subscribeData),
+    messageAttributes: {
+        type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_SUBSCRIBE' },
+    }
+  }, function(err) {
+    if (err) console.log(err);
+  });
+}
+
 
 submitFeedEvent = ( feedData ) => {
 
@@ -67,7 +79,7 @@ submitFeedEvent = ( feedData ) => {
             id: entry['yt:videoId'][0],
             body: JSON.stringify(entry),
             messageAttributes: {
-                type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_PUBSUB' },
+                type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_FEED' },
             }
           }, function(err) {
             if (err) console.log(err);
