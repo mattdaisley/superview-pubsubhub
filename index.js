@@ -54,11 +54,13 @@ pubsub.on("feed", function(data){
 
 pubsub.on("listen", function(){
   console.log("Server listening on port %s", pubsub.port);
+  // const topic = 'https://www.youtube.com/xml/feeds/videos.xml?channel_id=UCeYVSbQgaLdvLBvaRz5Virw'
+  // const hub = 'http://pubsubhubbub.appspot.com/'
+  // pubsub.subscribe(topic, hub, (err) => console.log(err) )
 });
 
 submitSubscribeEvent = ( subscribeData ) => {
   producer.send({
-    id: subscribeData.topic,
     body: JSON.stringify(subscribeData),
     messageAttributes: {
         type: { DataType: 'String', StringValue: 'GOOGLE_YOUTUBE_SUBSCRIBE' },
